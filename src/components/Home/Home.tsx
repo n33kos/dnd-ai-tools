@@ -8,6 +8,15 @@ export default () => {
   return (
     <div>
       <h1>Campaigns</h1>
+      <ul>
+        <button
+          type="button"
+          onClick={() => {}}
+        >
+          + New Campaign
+        </button>
+      </ul>
+
       {campaigns.map((campaign) => (
         <div key={campaign.id}>
           {campaign.id} - {campaign.title}

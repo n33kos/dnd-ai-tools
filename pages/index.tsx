@@ -1,15 +1,3 @@
-import {ApolloProvider, ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
-import App from '../src/components/App/App';
+import Home from "../src/components/Home/Home";
 
-export default function Index() {
-  const apolloClient: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-    uri: '/api/graphql',
-    cache: new InMemoryCache(),
-  });
-
-  return (
-    <ApolloProvider client={apolloClient}>
-      <App />
-    </ApolloProvider>
-  );
-}
+export default () => (<Home />);

@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'VT323';
+  src: url('/VT323-Regular.woff2') format('woff2');
+}
+
+body {
+  background-color: black;
+  color: white;
+  font-family: 'VT323';
+  letter-spacing: 0.1em;
+  margin: 0;
+  padding: 0;
+
+  ::-moz-selection {
+    color: black;
+    background: white;
+  }
+
+  ::selection {
+    color: black;
+    background: white;
+  }
+}
