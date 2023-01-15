@@ -1,5 +1,7 @@
+import Home from "../Home/Home";
+
 export default () => (
   <div>
-    HELLO IM THE INTERFACE
+    <Home />
   </div>
 )
