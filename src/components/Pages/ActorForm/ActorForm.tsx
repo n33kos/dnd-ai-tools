@@ -72,7 +72,7 @@ export default () => {
             })
           }}
         >
-          {loading ? "Loading..." : "Create Npc"}
+          {loading ? "Loading..." : "Create Actor"}
         </button>
       </ul>
 
