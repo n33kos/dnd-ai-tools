@@ -1,5 +1,11 @@
-import "reflect-metadata";
-import { DataSource } from "typeorm";
+import "reflect-metadata"
+import { DataSource } from "typeorm"
+import Actor from "./entities/Actor";
+import Campaign from "./entities/Campaign"
+import Conversation from "./entities/Conversation";
+import Location from "./entities/Location";
+import Message from "./entities/Message";
+import { InitialTableCreation1673891728991 } from "./migrations/1673891728991-InitialTableCreation";
 
 export default class SqliteDataSource {
   private static dataSource: DataSource;
@@ -9,10 +15,16 @@ export default class SqliteDataSource {
       SqliteDataSource.dataSource = new DataSource({
         type: "sqlite",
         database: "dnd-ai-tools.sqlite",
-        synchronize: true,
         logging: true,
-        entities: ["entities/*.ts"],
-        migrations: [],
+        entities: [
+          Actor,
+          Campaign,
+          Conversation,
+          Location,
+          Message,
+        ],
+        migrations: [InitialTableCreation1673891728991],
+        migrationsRun: true,
         subscribers: [],
       });
 
