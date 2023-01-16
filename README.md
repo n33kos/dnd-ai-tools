@@ -1,6 +1,7 @@
 # DND AI Tools
 `DND AI Tools` is an AI assisted dungeon master toolset leveraging openAI's chat API to assist in the generation of campaigns, characters, locations, and most importantly _*conversations between groups of NPCs and Players*_.
 
+![Example COnversation](./public/conversation-example.gif)
 
 ## Setup
 1. Navigate into the project directory
