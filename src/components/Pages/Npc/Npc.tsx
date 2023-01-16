@@ -7,18 +7,18 @@ import OptionList from '../../shared/OptionList/OptionList';
 export default () => {
   const router = useRouter()
   const { id } = router.query
-  const { data, loading } = useQuery(FindActor, { variables: { id } })
+  const { data, loading } = useQuery(FindActor, { variables: { id }, skip: !id })
 
   const npc = data?.actor || {};
 
   const options = [
     {
       id: 0,
-      title: "Start Conversation",
-      href: `/conversations/new?npcId=${id}`
+      title: "Go To Conversation",
+      href: `/conversations?npcId=${id}`
     },
     {
-      id: 0,
+      id: 1,
       title: "Back To Campaign",
       href: `/campaigns/${npc.campaignId}`
     }

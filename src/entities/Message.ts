@@ -15,6 +15,11 @@ export default class Message {
   @Field()
   @Column()
   // @ts-ignore-next-line
+  actorId: number
+
+  @Field()
+  @Column()
+  // @ts-ignore-next-line
   conversationId: number
 
   @Field()

@@ -11,4 +11,8 @@ export default class CreateUpdateMessageInput {
   @Field(() => ID)
   // @ts-ignore-next-line
   conversationId!: ID
+
+  @Field(() => ID)
+  // @ts-ignore-next-line
+  actorId!: ID
 }

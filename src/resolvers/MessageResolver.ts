@@ -37,11 +37,13 @@ export default class MessageResolver extends BaseResolver {
       message = await entityManager.findOneBy(Message, { id: data.id });
       message.message = data.message || message.message;
       message.conversationId = data.conversationId || message.conversationId;
+      message.actorId = data.actorId || message.actorId;
       message.updatedAt = new Date;
     } else {
       message = new Message();
       message.message = data.message;
       message.conversationId = data.conversationId;
+      message.actorId = data.actorId;
       message.createdAt = new Date;
       message.updatedAt = new Date;
     }
