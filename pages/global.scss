@@ -7,17 +7,62 @@ body {
   background-color: black;
   color: white;
   font-family: 'VT323';
-  letter-spacing: 0.1em;
+  font-size: 1.75em;
+  letter-spacing: 0.075em;
   margin: 0;
-  padding: 0;
+  padding: 0 16px;
 
   ::-moz-selection {
     color: black;
-    background: white;
+    background-color: white;
   }
 
   ::selection {
     color: black;
-    background: white;
+    background-color: white;
+  }
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+a, a:visited {
+  font-family: 'VT323';
+  color: white;
+  text-decoration: underline;
+  padding: 0;
+  margin: 0;
+}
+
+a:hover, a:focus, a:active {
+  outline: none;
+  color: black;
+  background-color: white;
+}
+
+button {
+  font-family: 'VT323';
+  border: 2px solid white;
+  background: none;
+  color: white;
+  font-size: 20px;
+  padding: 5px;
+  display: block;
+}
+
+input, textarea {
+  font-family: 'VT323';
+  letter-spacing: 0.1em;
+  font-size: 16px;
+  color: white;
+  background-color: black;
+  border: 2px solid white;
+  min-width: 320px;
+  width: 50%;
+
+  &:focus {
+    outline: none;
   }
 }

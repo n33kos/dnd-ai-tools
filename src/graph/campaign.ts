@@ -10,7 +10,7 @@ export const CampaignFragment = gql`
 
 export const AllCampaigns = gql`
   ${CampaignFragment}
-  query AllCampaigns {
+  query AllCampaignsQuery {
     campaigns {
       ...CampaignFragment
     }
@@ -19,8 +19,17 @@ export const AllCampaigns = gql`
 
 export const FindCampaign = gql`
   ${CampaignFragment}
-  query FindCampaign($id: Number!) {
-    campaigns(id: $id) {
+  query FindCampaignQuery($id: ID!) {
+    campaign(id: $id) {
+      ...CampaignFragment
+    }
+  }
+`;
+
+export const CreateUpdateCampaign = gql`
+  ${CampaignFragment}
+  mutation CreateUpdateCampaignMutation($data: CreateUpdateCampaignInput!) {
+    createUpdateCampaign(data: $data) {
       ...CampaignFragment
     }
   }

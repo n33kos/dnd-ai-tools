@@ -1,13 +1,13 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Mutation, Query, Resolver, ID } from "type-graphql";
 import Campaign from "../entities/Campaign";
-import { NewCampaignInput } from "../inputs/NewCampaignInput";
+import CreateUpdateCampaignInput from "../inputs/CreateUpdateCampaignInput";
 import BaseResolver from "./BaseResolver";
-
 
 @Resolver(Campaign)
 export default class CampaignResolver extends BaseResolver {
   @Query(() => Campaign, { nullable: true })
-  async campaign(@Arg("id") id: number) {
+  // @ts-ignore-next-line
+  async campaign(@Arg("id") id: ID) {
     const entityManager = await this.getEntityManager();
     const campaign = await entityManager.findOneBy(Campaign, { id });
 
@@ -26,16 +26,24 @@ export default class CampaignResolver extends BaseResolver {
   }
 
   @Mutation(() => Campaign)
-  async addCampaign(
-    @Arg("newCampaignData") newCampaignData: NewCampaignInput,
+  async createUpdateCampaign(
+    @Arg("data") data: CreateUpdateCampaignInput,
   ): Promise<Campaign> {
     const entityManager = await this.getEntityManager();
-    const campaign: Campaign = new Campaign();
-    campaign.title = newCampaignData.title;
-    campaign.description = newCampaignData.description;
-    campaign.createdAt = new Date;
-    campaign.updatedAt = new Date;
 
+    let campaign: Campaign;
+    if (data.id) {
+      campaign = await entityManager.findOneBy(Campaign, { id: data.id });
+      campaign.title = data.title || campaign.title;
+      campaign.description = data.description || campaign.description;
+      campaign.updatedAt = new Date;
+    } else {
+      campaign = new Campaign();
+      campaign.title = data.title;
+      campaign.description = data.description;
+      campaign.createdAt = new Date;
+      campaign.updatedAt = new Date;
+    }
     await entityManager.save(campaign);
 
     return campaign;

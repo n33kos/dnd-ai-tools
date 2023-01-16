@@ -17,6 +17,7 @@ const dataSource = await SqliteDataSource.getInstance();
 
 const schema = await buildSchema({
   resolvers: [CampaignResolver],
+  validate: false,
 })
 
 const apolloServer = new ApolloServer({ schema });
