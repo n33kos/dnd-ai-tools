@@ -2,7 +2,9 @@ import { useMutation } from '@apollo/client';
 import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
 import { CreateUpdateActor } from '../../../graph/actor';
+import Input from '../../shared/Input/Input';
 import OptionList from '../../shared/OptionList/OptionList';
+import TextArea from '../../shared/TextArea/TextArea';
 
 export default () => {
   const router = useRouter()
@@ -25,9 +27,10 @@ export default () => {
       <h1>Create A New NPC</h1>
       <ul>
         <div>Name:</div>
-        <input
+        <Input
           value={name}
-          onChange={(e) => setName(e.currentTarget.value)}
+          onChange={(val) => setName(val)}
+          randomizePrompt="Give me the unquoted name of a unique dungeons and dragons character: "
         />
 
         <div>Actor Type</div>
@@ -39,9 +42,10 @@ export default () => {
         </div>
 
         <div>Description:</div>
-        <textarea
+        <TextArea
           value={description}
-          onChange={(e) => setDescription(e.currentTarget.value)}
+          onChange={(val) => setDescription(val)}
+          randomizePrompt={`Give me a paragraph description for a unique dungeons and dragons character${name ? " named " + name : ""}:`}
         />
 
         {error && (

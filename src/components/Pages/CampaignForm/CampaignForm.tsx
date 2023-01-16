@@ -2,8 +2,9 @@ import { useMutation } from '@apollo/client';
 import Router from 'next/router';
 import { useState } from 'react';
 import { CreateUpdateCampaign } from '../../../graph/campaign';
+import Input from '../../shared/Input/Input';
 import OptionList from '../../shared/OptionList/OptionList';
-import styles from './CampaignForm.module.scss';
+import TextArea from '../../shared/TextArea/TextArea';
 
 export default () => {
   const [createUpdateCampaign, { data, loading, error }] = useMutation(CreateUpdateCampaign);
@@ -23,17 +24,17 @@ export default () => {
       <h1>Create A New Campaign</h1>
       <ul>
         <div>Title:</div>
-        <input
-          className={styles.Input}
+        <Input
           value={title}
-          onChange={(e) => setTitle(e.currentTarget.value)}
+          onChange={(val) => setTitle(val)}
+          randomizePrompt="Give me the unquoted name of a unique dungeons and dragons campaign: "
         />
 
         <div>Description:</div>
-        <textarea
-          className={ styles.Textarea }
+        <TextArea
           value={description}
-          onChange={(e) => setDescription(e.currentTarget.value)}
+          onChange={(val) => setDescription(val)}
+          randomizePrompt={`Give me a paragraph description for a unique dungeons and dragons campaign${title ? " entitled " + title : ""}:`}
         />
 
         {error && (
@@ -43,7 +44,6 @@ export default () => {
         )}
 
         <button
-          className={ styles.Button }
           disabled={loading}
           onClick={() => {
             createUpdateCampaign({

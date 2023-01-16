@@ -3,7 +3,9 @@ import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
 import { CreateUpdateConversation } from '../../../graph/conversation';
 import ActorSelect from '../../shared/ActorSelect/ActorSelect';
+import Input from '../../shared/Input/Input';
 import OptionList from '../../shared/OptionList/OptionList';
+import TextArea from '../../shared/TextArea/TextArea';
 import styles from './ConversationForm.module.scss';
 
 export default () => {
@@ -12,7 +14,6 @@ export default () => {
   const [createUpdateConversation, { data, loading, error }] = useMutation(CreateUpdateConversation);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [participants, setParticipants] = useState([]);
 
   const options = [
     {
@@ -27,35 +28,18 @@ export default () => {
       <h1>Create A New Conversation</h1>
       <ul>
         <div>Title:</div>
-        <input
+        <Input
           value={title}
-          onChange={(e) => setTitle(e.currentTarget.value)}
+          onChange={(val) => setTitle(val)}
+          randomizePrompt="Give me the unquoted name of a unique dungeons and dragons conversation: "
         />
 
         <div>Description:</div>
-        <textarea
+        <TextArea
           value={description}
-          onChange={(e) => setDescription(e.currentTarget.value)}
+          onChange={(val) => setDescription(val)}
+          randomizePrompt={`Give me a paragraph description for a unique dungeons and dragons conversation${title ? " entitled " + title : ""}:`}
         />
-
-        <div>Participants</div>
-        <ActorSelect
-          campaignId={campaignId as string}
-          onSelect={(actor) => setParticipants(
-            [...new Map([...participants, actor].map((actor) => [actor.id, actor])).values()]
-          )}
-        />
-        {participants.map((participant) => (
-          <div key={participant.id}>
-            {participant.name}
-            <button
-              className={styles.RemoveButton}
-              onClick={() => setParticipants(participants.filter((p) => p.id !== participant.id))}
-            >
-              x
-            </button>
-          </div>
-        ))}
 
         {error && (<div>{error.message}</div>)}
 
@@ -68,7 +52,6 @@ export default () => {
                   title,
                   description,
                   campaignId,
-                  actors: participants.map((participant) => participant.id),
                 }
               },
               onCompleted(data) {

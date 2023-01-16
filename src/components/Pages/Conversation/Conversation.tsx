@@ -1,3 +1,4 @@
+import { Element, scroller } from 'react-scroll'
 import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -31,6 +32,14 @@ export default () => {
 
   const refetchQueries = [{ query: AllMessages, variables: { conversationId: conversation.id } }];
 
+  const scrollToNewestMessage = () => {
+    scroller.scrollTo('last-message', {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart'
+    });
+  }
+
   return (
     <div>
       {loadingConversation && (<div>Loading...</div>)}
@@ -43,16 +52,17 @@ export default () => {
       <div className={styles.Messages}>
         {loadingMessages && (<div>Loading...</div>)}
         {messages && (
-          messages.map((message) => (
+          messages.map((message, i) => (
             <div
-              key={message.id}
-              className={`
-                ${styles.Message}
-                ${message.actor?.actorType === 'NPC' ? styles.NPC : styles.Player}
-              `}
+            key={message.id}
+            className={`
+              ${styles.Message}
+              ${message.actor?.actorType === 'NPC' ? styles.NPC : styles.Player}
+            `}
             >
               <div className={styles.ActorName}>{message.actor?.name || "Dungeon Master"}</div>
               <div className={styles.MessageBubble}>{message.message}</div>
+              {i === messages.length - 1 && (<Element name="last-message" />)}
             </div>
           ))
         )}
@@ -77,6 +87,7 @@ export default () => {
                   }
                 },
                 refetchQueries,
+                onCompleted: scrollToNewestMessage,
               })
             }}
           >
@@ -108,7 +119,10 @@ export default () => {
                   }
                 },
                 refetchQueries,
-                onCompleted: () =>setMessage(''),
+                onCompleted: () =>{
+                  setMessage('');
+                  scrollToNewestMessage();
+                },
               })
             }}
               >

@@ -2,7 +2,9 @@ import { useMutation } from '@apollo/client';
 import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
 import { CreateUpdateLocation } from '../../../graph/location';
+import Input from '../../shared/Input/Input';
 import OptionList from '../../shared/OptionList/OptionList';
+import TextArea from '../../shared/TextArea/TextArea';
 
 export default () => {
   const router = useRouter()
@@ -24,15 +26,17 @@ export default () => {
       <h1>Create A New Location</h1>
       <ul>
         <div>Title:</div>
-        <input
+        <Input
           value={title}
-          onChange={(e) => setTitle(e.currentTarget.value)}
+          onChange={(val) => setTitle(val)}
+          randomizePrompt="Give me the unquoted name of a unique dungeons and dragons location: "
         />
 
         <div>Description:</div>
-        <textarea
+        <TextArea
           value={description}
-          onChange={(e) => setDescription(e.currentTarget.value)}
+          onChange={(val) => setDescription(val)}
+          randomizePrompt={`Give me a paragraph description for a unique dungeons and dragons location${title ? " entitled " + title : ""}:`}
         />
 
         {error && (

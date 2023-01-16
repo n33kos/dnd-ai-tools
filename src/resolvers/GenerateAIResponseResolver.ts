@@ -19,9 +19,7 @@ export default class GenerateAIResponseResolver extends BaseResolver {
     const previousMessages = await entityManager.findBy(Message, { conversationId: Number(data.conversationId) });
 
     const prompt = GenerateAiMessagePrompt(conversation, actor, previousMessages);
-    console.log(prompt);
     const response = await OpenAi(prompt);
-    console.log(response);
 
     const npcResponse = new Message();
     npcResponse.message = response;
@@ -32,5 +30,10 @@ export default class GenerateAIResponseResolver extends BaseResolver {
     await entityManager.save(npcResponse);
 
     return npcResponse;
+  }
+
+  @Mutation(() => String)
+  async generateFromPrompt(@Arg("prompt") prompt: String): Promise<String> {
+    return await OpenAi(prompt);
   }
 }
