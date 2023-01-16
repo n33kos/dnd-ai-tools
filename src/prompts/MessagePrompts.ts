@@ -2,14 +2,19 @@ import Actor from "../entities/Actor";
 import Conversation from "../entities/Conversation";
 import Message from "../entities/Message";
 
-export const GenerateAIMessagePrompt = (
+export const GenerateAiMessagePrompt = (
   conversation: Conversation,
   actor: Actor,
   previousMessages: Message[],
 ) => {
-  const conversationParticipants: Actor[] = [...new Map(
-    previousMessages.map((message) => [message.actor.id, message.actor])
-  ).values()];
+  const conversationParticipants: Actor[] = [
+    ...new Map<number, Actor>(
+      [
+        ...previousMessages.map((message: Message) => [message.actor.id, message.actor]) as [number, Actor][],
+        [actor.id, actor] as [number, Actor],
+      ]
+    ).values()
+  ];
   let npcs = conversationParticipants.filter(actor => actor.actorType === "NPC");
   let pcs = conversationParticipants.filter(actor => actor.actorType === "PC");
 

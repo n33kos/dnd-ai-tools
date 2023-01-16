@@ -32,6 +32,7 @@ export default class MessageResolver extends BaseResolver {
     const entityManager = await this.getEntityManager();
     return entityManager.findBy(Message, { conversationId });
   }
+
   @Mutation(() => Message)
   async createUpdateMessage(
     @Arg("data") data: CreateUpdateMessageInput,
@@ -48,7 +49,8 @@ export default class MessageResolver extends BaseResolver {
     } else {
       message = new Message();
       message.message = data.message;
-      message.conversationId = Number(data.actorId);
+      message.conversationId = Number(data.conversationId);
+      message.actorId = Number(data.actorId);
       message.createdAt = new Date;
       message.updatedAt = new Date;
     }

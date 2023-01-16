@@ -1,10 +1,9 @@
 import { Arg, Mutation, Resolver } from "type-graphql";
-import { In } from "typeorm";
-import Conversation from "../components/Pages/Conversation/Conversation";
 import Actor from "../entities/Actor";
+import Conversation from "../entities/Conversation";
 import Message from "../entities/Message";
 import GenerateAIMessageInput from "../inputs/GenerateAIMessageInput";
-import { GenerateAIMessagePrompt } from "../prompts/MessagePrompts";
+import { GenerateAiMessagePrompt } from "../prompts/MessagePrompts";
 import OpenAi from "../services/OpenAi";
 import BaseResolver from "./BaseResolver";
 
@@ -15,16 +14,14 @@ export default class GenerateAIResponseResolver extends BaseResolver {
     @Arg("data") data: GenerateAIMessageInput,
   ): Promise<Message> {
     const entityManager = await this.getEntityManager();
+    const conversation = await entityManager.findOneBy(Conversation, { id: Number(data.conversationId) });
+    const actor = await entityManager.findOneBy(Actor, { id: Number(data.actorId) });
+    const previousMessages = await entityManager.findBy(Message, { conversationId: Number(data.conversationId) });
 
-    const conversation = await entityManager.findOneBy(Conversation, { id: data.conversationId });
-    const actor = await entityManager.findOneBy(Actor, { id: data.actorId });
-    const previousMessages = await entityManager.findBy(Message, { conversationId: data.conversationId });
-
-    const prompt = GenerateAIMessagePrompt(conversation, actor, previousMessages);
+    const prompt = GenerateAiMessagePrompt(conversation, actor, previousMessages);
     console.log(prompt);
-    // const response = await OpenAi(prompt);
-    // console.log(response);
-    const response = "This is a test response.";
+    const response = await OpenAi(prompt);
+    console.log(response);
 
     const npcResponse = new Message();
     npcResponse.message = response;

@@ -35,6 +35,7 @@ export const CreateUpdateMessage = gql`
 `;
 
 export const GenerateAIMessage = gql`
+  ${MessageFragment}
   mutation GenerateAIMessageMutation($data: GenerateAIMessageInput!) {
     generateAIMessage(data: $data) {
       ...MessageFragment

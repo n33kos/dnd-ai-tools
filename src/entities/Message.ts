@@ -29,7 +29,7 @@ export default class Message {
   @Column()
   updatedAt: Date
 
-  @ManyToOne(() => Actor, actor => actor.id)
+  @ManyToOne(() => Actor, actor => actor.id, { eager: true })
   @JoinColumn({ name: "actorId" })
   actor: Actor
 }

@@ -61,6 +61,10 @@ export default class ConversationResolver extends BaseResolver {
   ): Promise<Conversation> {
     const entityManager = await this.getEntityManager();
 
+    // TODO: Handle adding data.actors to the conversation. we probably should make a join table.
+    // TODO: Handle adding data.actors to the conversation. we probably should make a join table.
+    // TODO: Handle adding data.actors to the conversation. we probably should make a join table.
+
     let conversation: Conversation;
     if (data.id) {
       conversation = await entityManager.findOneBy(Conversation, { id: data.id });

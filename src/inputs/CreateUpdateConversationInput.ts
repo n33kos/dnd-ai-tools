@@ -13,4 +13,7 @@ export default class CreateUpdateConversationInput {
 
   @Field(() => ID)
   campaignId!: GraphqlID
+
+  @Field(() => [ID], { nullable: true })
+  actors: GraphqlID[]
 }
