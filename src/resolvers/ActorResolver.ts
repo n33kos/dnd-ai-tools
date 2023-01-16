@@ -39,14 +39,14 @@ export default class ActorResolver extends BaseResolver {
     if (data.id) {
       actor = await entityManager.findOneBy(Actor, { id: data.id });
       actor.description = data.description || actor.description;
-      actor.campaignId = data.campaignId || actor.campaignId;
+      actor.campaignId = Number(data.campaignId || actor.campaignId);
       actor.actorType = data.actorType || actor.actorType;
       actor.name = data.name || actor.name;
       actor.updatedAt = new Date;
     } else {
       actor = new Actor();
       actor.description = data.description;
-      actor.campaignId = data.campaignId;
+      actor.campaignId = Number(data.campaignId);
       actor.actorType = data.actorType;
       actor.name = data.name;
       actor.createdAt = new Date;

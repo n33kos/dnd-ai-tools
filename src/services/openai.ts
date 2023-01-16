@@ -5,7 +5,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export default async function (prompt, temperature = 0.6, model = "text-davinci-003") {
+export default async function (prompt, temperature = 0.6, model = "text-davinci-003", max_tokens = 256) {
   if (!configuration.apiKey) {
     throw new Error("OpenAI API key not configured, set key in .env file");
   }
@@ -14,6 +14,10 @@ export default async function (prompt, temperature = 0.6, model = "text-davinci-
     model,
     prompt,
     temperature,
+    max_tokens,
   });
+
+  console.log(completion.data.choices);
+
   return completion.data.choices[0].text
 }

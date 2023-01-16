@@ -12,8 +12,7 @@ export default class CreateUpdateActorInput {
   description!: string
 
   @Field(() => ID)
-  // @ts-ignore-next-line
-  campaignId!: ID
+  campaignId!: GraphqlID
 
   @Field()
   actorType!: "NPC" | "PC"

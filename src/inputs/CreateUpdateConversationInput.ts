@@ -12,6 +12,5 @@ export default class CreateUpdateConversationInput {
   description!: string
 
   @Field(() => ID)
-  // @ts-ignore-next-line
-  campaignId!: ID
+  campaignId!: GraphqlID
 }

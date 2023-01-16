@@ -8,6 +8,7 @@ import ActorResolver from "../../../src/resolvers/ActorResolver";
 import ConversationResolver from "../../../src/resolvers/ConversationResolver";
 import LocationResolver from "../../../src/resolvers/LocationResolver";
 import MessageResolver from "../../../src/resolvers/MessageResolver";
+import GenerateAIResponseResolver from "../../../src/resolvers/GenerateAIResponseResolver";
 
 // disable next js from handling this route
 export const config: PageConfig = {
@@ -26,6 +27,7 @@ const schema = await buildSchema({
     ConversationResolver,
     LocationResolver,
     MessageResolver,
+    GenerateAIResponseResolver
   ],
   validate: false,
 })

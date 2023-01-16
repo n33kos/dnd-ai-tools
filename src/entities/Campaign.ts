@@ -2,7 +2,7 @@ import { Field, ID, ObjectType } from "type-graphql"
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
 
 @ObjectType()
-@Entity()
+@Entity("campaigns")
 export default class Campaign {
   @PrimaryGeneratedColumn()
   @Field(() => ID)

@@ -35,4 +35,4 @@ tmp/
 temp/
 
 # sqlite database
-database.sqlite
+dnd-ai-tools.sqlite

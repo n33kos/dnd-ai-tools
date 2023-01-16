@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ConversationByActor, FindConversation } from '../../../graph/conversation';
@@ -7,9 +8,10 @@ import styles from './Conversation.module.scss';
 
 export default () => {
   const router = useRouter()
-  const [message, setMessage] = useState('');
-  const [createUpdateMessage, { loading: sendMessagLoading }] = useMutation(CreateUpdateMessage);
   const { id, npcId } = router.query
+  const [message, setMessage] = useState('');
+  const [selectedPC, setSelectedPC] = useState();
+  const [createUpdateMessage, { loading: sendMessagLoading }] = useMutation(CreateUpdateMessage);
   const { data: npcConversationData } = useQuery(ConversationByActor, { variables: { actorId: npcId }, skip: !npcId })
   const { data: conversationData, loading: loadingConversation } = useQuery(FindConversation, { variables: { id }, skip: !id })
 
@@ -34,46 +36,60 @@ export default () => {
         {conversation.description}
       </p>
 
-      {loadingMessages && (<div>Loading...</div>)}
-      {messages && (
-        messages.map((message) => (
-          <div
-            key={message.id}
-            className={styles.Message}
-          >
-            <div>{message.message}</div>
-            <div>{message.createdAt}</div>
-          </div>
-        ))
-      )}
+      <div className={styles.Messages}>
+        {loadingMessages && (<div>Loading...</div>)}
+        {messages && (
+          messages.map((message) => (
+            <div
+              key={message.id}
+              className={`
+                ${styles.Message}
+                ${message.actor?.actorType === 'NPC' ? styles.NPC : styles.Player}
+              `}
+            >
+              <div className={styles.ActorName}>{message.actor?.name || "Dungeon Master"}</div>
+              <div className={styles.MessageBubble}>{message.message}</div>
+            </div>
+          ))
+        )}
+      </div>
 
-      <textarea
-        className={styles.Textarea}
-        value={message}
-        onChange={(e) => setMessage(e.currentTarget.value)}
-      />
-      <button
-        className={styles.Button}
-        onClick={() => {
-          createUpdateMessage({
-            variables: {
-              data: {
-                message,
-                conversationId: conversation.id,
-                actorId: 0
-              }
-            },
-            refetchQueries: [
-              { query: AllMessages, variables: { conversationId: conversation.id } }
-            ],
-            onCompleted() {
-              setMessage('');
-            },
-          })
-        }}
-          >
-        {sendMessagLoading ? "Loading..." : "Create Message"}
-      </button>
+      <div className={styles.Form}>
+        <div className={styles.ActorName}>{selectedPC?.name || "Dungeon Master"}</div>
+
+        <textarea
+          className={styles.Textarea}
+          value={message}
+          onChange={(e) => setMessage(e.currentTarget.value)}
+        />
+
+        <button
+          className={styles.Button}
+          onClick={() => {
+            createUpdateMessage({
+              variables: {
+                data: {
+                  message,
+                  conversationId: conversation.id,
+                  actorId: 0
+                }
+              },
+              refetchQueries: [
+                { query: AllMessages, variables: { conversationId: conversation.id } }
+              ],
+              onCompleted() {
+                setMessage('');
+              },
+            })
+          }}
+            >
+          {sendMessagLoading ? "Loading..." : "Create Message"}
+        </button>
+      </div>
+
+      <Link href={`/campaigns/${conversation?.campaignId}`}>
+        Back to Campaign
+      </Link>
     </div>
   );
 }

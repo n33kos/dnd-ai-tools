@@ -1,8 +1,9 @@
 import { Field, ID, ObjectType } from "type-graphql"
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
+import Message from "./Message"
 
 @ObjectType()
-@Entity()
+@Entity("actors")
 export default class Actor {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
@@ -18,7 +19,6 @@ export default class Actor {
 
   @Field()
   @Column()
-  // @ts-ignore-next-line
   campaignId: number
 
   @Field()
@@ -32,4 +32,6 @@ export default class Actor {
   @Field()
   @Column()
   updatedAt: Date
+
+  messages: Message[]
 }

@@ -66,13 +66,13 @@ export default class ConversationResolver extends BaseResolver {
       conversation = await entityManager.findOneBy(Conversation, { id: data.id });
       conversation.title = data.title || conversation.title;
       conversation.description = data.description || conversation.description;
-      conversation.campaignId = data.campaignId || conversation.campaignId;
+      conversation.campaignId = Number(data.campaignId || conversation.campaignId);
       conversation.updatedAt = new Date;
     } else {
       conversation = new Conversation();
       conversation.title = data.title;
       conversation.description = data.description;
-      conversation.campaignId = data.campaignId;
+      conversation.campaignId = Number(data.campaignId);
       conversation.createdAt = new Date;
       conversation.updatedAt = new Date;
     }

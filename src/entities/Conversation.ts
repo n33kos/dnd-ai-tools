@@ -2,7 +2,7 @@ import { Field, ID, ObjectType } from "type-graphql"
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
 
 @ObjectType()
-@Entity()
+@Entity("conversations")
 export default class Conversation {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
@@ -14,7 +14,6 @@ export default class Conversation {
 
   @Field()
   @Column()
-  // @ts-ignore-next-line
   campaignId: number
 
   @Field()

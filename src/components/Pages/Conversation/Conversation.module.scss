@@ -2,11 +2,46 @@
   margin-top: 20px;
 }
 
-.Input,
-.Textarea {
-  margin-bottom: 20px;
+.Messages {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.Textarea {
-  min-height: 175px;
+.Message {
+  font-size: 32px;
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.MessageBubble {
+  border: 2px solid white;
+  padding: 16px;
+}
+
+.ActorName {
+  margin-bottom: 8px;
+}
+
+.NPC {
+  text-align: left;
+}
+
+.Player {
+  text-align: right;
+  margin-left: auto;
+}
+
+.Form {
+  margin: 64px 0 32px auto;
+  max-width: 700px;
+  display: flex;
+  justify-content: right;
+  flex-direction: column;
+
+  .ActorName {
+    margin-left: auto;
+  }
 }

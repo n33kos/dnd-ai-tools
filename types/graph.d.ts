@@ -1,0 +1,1 @@
+type GraphqlID = string | number;

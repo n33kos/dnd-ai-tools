@@ -1,8 +1,9 @@
 import { Field, ID, ObjectType } from "type-graphql"
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, JoinColumn } from "typeorm"
+import Actor from "./Actor"
 
 @ObjectType()
-@Entity()
+@Entity("messages")
 export default class Message {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
@@ -14,12 +15,10 @@ export default class Message {
 
   @Field()
   @Column()
-  // @ts-ignore-next-line
   actorId: number
 
   @Field()
   @Column()
-  // @ts-ignore-next-line
   conversationId: number
 
   @Field()
@@ -29,4 +28,8 @@ export default class Message {
   @Field()
   @Column()
   updatedAt: Date
+
+  @ManyToOne(() => Actor, actor => actor.id)
+  @JoinColumn({ name: "actorId" })
+  actor: Actor
 }

@@ -8,6 +8,11 @@ export const MessageFragment = gql`
     conversationId
     createdAt
     updatedAt
+    actor {
+      id
+      name
+      actorType
+    }
   }
 `;
 

@@ -37,13 +37,13 @@ export default class LocationResolver extends BaseResolver {
       location = await entityManager.findOneBy(Location, { id: data.id });
       location.title = data.title || location.title;
       location.description = data.description || location.description;
-      location.campaignId = data.campaignId || location.campaignId;
+      location.campaignId = Number(data.campaignId || location.campaignId);
       location.updatedAt = new Date;
     } else {
       location = new Location();
       location.title = data.title;
       location.description = data.description;
-      location.campaignId = data.campaignId;
+      location.campaignId = Number(data.campaignId);
       location.createdAt = new Date;
       location.updatedAt = new Date;
     }

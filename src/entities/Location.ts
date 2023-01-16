@@ -2,7 +2,7 @@ import { Field, ID, ObjectType } from "type-graphql"
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
 
 @ObjectType()
-@Entity()
+@Entity("locations")
 export default class Location {
   @PrimaryGeneratedColumn()
   @Field(() => ID)
@@ -14,7 +14,6 @@ export default class Location {
 
   @Field()
   @Column()
-  // @ts-ignore-next-line
   campaignId: number
 
   @Field()

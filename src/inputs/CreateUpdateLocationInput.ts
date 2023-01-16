@@ -12,6 +12,5 @@ export default class CreateUpdateLocationInput {
   description!: string
 
   @Field(() => ID)
-  // @ts-ignore-next-line
-  campaignId!: ID
+  campaignId!: GraphqlID
 }

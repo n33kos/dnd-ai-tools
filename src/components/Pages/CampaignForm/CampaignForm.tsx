@@ -44,7 +44,7 @@ export default () => {
                   description,
                 }
               },
-              onCompleted(data, clientOptions?) {
+              onCompleted(data) {
                 Router.push(`/campaigns/${data.createUpdateCampaign.id}`)
               },
           })}}
