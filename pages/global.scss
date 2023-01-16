@@ -64,7 +64,7 @@ button {
   margin-top: 8px;
 }
 
-input, textarea {
+input, textarea, select {
   font-family: 'VT323';
   letter-spacing: 0.1em;
   font-size: 32px;
@@ -85,4 +85,17 @@ input, textarea {
 
 textarea {
   min-height: 175px;
+}
+
+select {
+  appearance: none;
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Safari, Chrome, Opera */
+  -webkit-appearance: none;
+  padding-right: 16px;
+  background-image: url('/dropdown-arrow.png');
+  background-repeat: no-repeat;
+  background-position: calc(100% - 8px) center;
+  background-size: 16px;
 }

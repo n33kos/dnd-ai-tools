@@ -2,62 +2,66 @@ import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { AllActors } from '../../../graph/actor';
 import { FindCampaign } from '../../../graph/campaign';
+import { AllConversations } from '../../../graph/conversation';
+import { AllLocations } from '../../../graph/location';
 import OptionList from '../../shared/OptionList/OptionList';
-// import styles from './Campaign.module.scss';
 
 export default () => {
   const router = useRouter()
   const { id } = router.query
   const { data, loading } = useQuery(FindCampaign, {variables: { id }})
-  const { data: npcData } = useQuery(AllActors, { variables: { campaignId: id, actorType: "NPC" } })
+  const { data: actorsData } = useQuery(AllActors, { variables: { campaignId: id } });
+  const { data: conversationData } = useQuery(AllConversations, { variables: { campaignId: id } });
+  const { data: locationData } = useQuery(AllLocations, { variables: { campaignId: id } });
 
   const campaign = data?.campaign || [];
-  const npcs = npcData?.actors || [];
-
-  console.log(npcs);
+  const actors = actorsData?.actors || [];
+  const conversations = conversationData?.conversations || [];
+  const locations = locationData?.locations || [];
 
   const options = [
     {
       id: 0,
-      title: "NPCs",
+      title: "Actors",
     },
     {
       id: 1,
-      title: "New NPC",
-      href: `/npcs/new?campaignId=${id}`
+      title: "+ New Actor",
+      href: `/actors/new?campaignId=${id}`
     },
-    ...npcs.map(npc => ({
-      id: `npc-${npc.id}`,
-      title: npc.name,
-      href: `/npcs/${npc.id}`
+    ...actors.map(actor => ({
+      id: `actor-${actor.id}`,
+      title: actor.name,
+      href: `/actors/${actor.id}`,
     })),
-    {
-      id: 2,
-      title: "PCs",
-    },
-    {
-      id: 3,
-      title: "New PC",
-      href: "/pcs/new"
-    },
     {
       id: 4,
       title: "Conversations",
     },
     {
       id: 5,
-      title: "New Conversation",
-      href: "/conversations/new"
+      title: "+ New Conversation",
+      href: `/conversations/new?campaignId=${id}`
     },
+    ...conversations.map(conversation => ({
+      id: `conversation-${conversation.id}`,
+      title: conversation.title,
+      href: `/conversations/${conversation.id}`,
+    })),
     {
       id: 6,
       title: "Locations",
     },
     {
       id: 7,
-      title: "New Location",
-      href: "/locations/new"
-    }
+      title: "+ New Location",
+      href: `/locations/new?campaignId=${id}`,
+    },
+    ...locations.map(location => ({
+      id: `location-${location.id}`,
+      title: location.title,
+      href: `/locations/${location.id}`,
+    })),
   ];
 
   return (

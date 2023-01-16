@@ -1,31 +1,32 @@
 import { useMutation, useQuery } from '@apollo/client';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { ConversationByActor, FindConversation } from '../../../graph/conversation';
-import { AllMessages, CreateUpdateMessage } from '../../../graph/message';
+import { useState } from 'react';
+import { FindConversation } from '../../../graph/conversation';
+import { AllMessages, CreateUpdateMessage, GenerateAIMessage } from '../../../graph/message';
+import OptionList from '../../shared/OptionList/OptionList';
 import styles from './Conversation.module.scss';
 
 export default () => {
-  const router = useRouter()
-  const { id, npcId } = router.query
+  const { query: { id } } = useRouter();
   const [message, setMessage] = useState('');
   const [selectedPC, setSelectedPC] = useState();
   const [createUpdateMessage, { loading: sendMessagLoading }] = useMutation(CreateUpdateMessage);
-  const { data: npcConversationData } = useQuery(ConversationByActor, { variables: { actorId: npcId }, skip: !npcId })
+  const [generateAIMessage, { loading: generateAIMessageLoading }] = useMutation(GenerateAIMessage);
   const { data: conversationData, loading: loadingConversation } = useQuery(FindConversation, { variables: { id }, skip: !id })
 
-  const npcConversation = npcConversationData?.mostRecentConversationByActor || [];
   const conversation = conversationData?.conversation || {};
 
   const { data: messagesData, loading: loadingMessages } = useQuery(AllMessages, { variables: { conversationId: conversation.id }, skip: !conversation })
   const messages = messagesData?.messages || [];
 
-  useEffect(() => {
-    if (npcConversation && npcConversation.id) {
-      router.push(`/conversations/${npcConversation.id}`)
+
+  const options = [
+    {
+      id: 1,
+      title: "Back To Campaign",
+      href: `/campaigns/${conversation?.campaignId}`
     }
-  }, [npcConversation])
+  ];
 
   return (
     <div>
@@ -79,6 +80,15 @@ export default () => {
               ],
               onCompleted() {
                 setMessage('');
+                generateAIMessage({
+                  variables: {
+                    conversationId: conversation.id,
+                    actorId: 1, // will add ability to choose later
+                  },
+                  refetchQueries: [
+                    { query: AllMessages, variables: { conversationId: conversation.id } }
+                  ],
+                })
               },
             })
           }}
@@ -87,9 +97,7 @@ export default () => {
         </button>
       </div>
 
-      <Link href={`/campaigns/${conversation?.campaignId}`}>
-        Back to Campaign
-      </Link>
+      <OptionList options={options}/>
     </div>
   );
 }

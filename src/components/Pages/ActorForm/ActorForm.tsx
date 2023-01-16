@@ -2,14 +2,23 @@ import { useMutation } from '@apollo/client';
 import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
 import { CreateUpdateActor } from '../../../graph/actor';
-import styles from './NpcForm.module.scss';
+import OptionList from '../../shared/OptionList/OptionList';
 
 export default () => {
   const router = useRouter()
   const { campaignId } = router.query
-  const [createUpdateNpc, { data, loading, error }] = useMutation(CreateUpdateActor);
+  const [createUpdateActor, { data, loading, error }] = useMutation(CreateUpdateActor);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [actorType, setActorType] = useState("NPC");
+
+  const options = [
+    {
+      id: 1,
+      title: "Back To Campaign",
+      href: `/campaigns/${campaignId}`
+    }
+  ];
 
   return (
     <div>
@@ -17,14 +26,20 @@ export default () => {
       <ul>
         <div>Name:</div>
         <input
-          className={styles.Input}
           value={name}
           onChange={(e) => setName(e.currentTarget.value)}
         />
 
+        <div>Actor Type</div>
+        <div>
+          <select onChange={ (e) => setActorType(e.currentTarget.value) }>
+            <option value="NPC" selected={actorType === "NPC"}>NPC</option>
+            <option value="PC" selected={actorType === "PC"}>PC</option>
+          </select>
+        </div>
+
         <div>Description:</div>
         <textarea
-          className={styles.Textarea}
           value={description}
           onChange={(e) => setDescription(e.currentTarget.value)}
         />
@@ -36,16 +51,15 @@ export default () => {
         )}
 
         <button
-          className={styles.Button}
           disabled={loading}
           onClick={() => {
-            createUpdateNpc({
+            createUpdateActor({
               variables: {
                 data: {
                   name,
                   description,
                   campaignId,
-                  actorType: "NPC"
+                  actorType,
                 }
               },
               onCompleted() {
@@ -57,6 +71,8 @@ export default () => {
           {loading ? "Loading..." : "Create Npc"}
         </button>
       </ul>
+
+      <OptionList options={options} />
     </div>
   );
 }

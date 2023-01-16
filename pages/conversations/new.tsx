@@ -1,3 +1,3 @@
-import ConverstionForm from "../../src/components/Pages/ConverstionForm/ConverstionForm";
+import ConversationForm from "../../src/components/Pages/ConversationForm/ConversationForm";
 
-export default () => (<ConverstionForm />);
+export default () => (<ConversationForm />);

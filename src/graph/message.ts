@@ -33,3 +33,11 @@ export const CreateUpdateMessage = gql`
     }
   }
 `;
+
+export const GenerateAIMessage = gql`
+  mutation GenerateAIMessageMutation($data: GenerateAIMessageInput!) {
+    generateAIMessage(data: $data) {
+      ...MessageFragment
+    }
+  }
+`;
