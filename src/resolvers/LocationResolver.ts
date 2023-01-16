@@ -11,8 +11,6 @@ export default class LocationResolver extends BaseResolver {
     const entityManager = await this.getEntityManager();
     const location = await entityManager.findOneBy(Location, { id });
 
-    console.log(location);
-
     if (location === undefined) {
       throw new Error(`${id} Not Found`);
     }

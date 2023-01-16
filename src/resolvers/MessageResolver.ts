@@ -11,8 +11,6 @@ export default class MessageResolver extends BaseResolver {
     const entityManager = await this.getEntityManager();
     const message = await entityManager.findOneBy(Message, { id });
 
-    console.log(message);
-
     if (message === undefined) {
       throw new Error(`${id} Not Found`);
     }

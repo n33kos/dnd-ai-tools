@@ -11,8 +11,6 @@ export default class CampaignResolver extends BaseResolver {
     const entityManager = await this.getEntityManager();
     const campaign = await entityManager.findOneBy(Campaign, { id });
 
-    console.log(campaign);
-
     if (campaign === undefined) {
       throw new Error(`${id} Not Found`);
     }

@@ -11,8 +11,6 @@ export default class ActorResolver extends BaseResolver {
     const entityManager = await this.getEntityManager();
     const actor = await entityManager.findOneBy(Actor, { id });
 
-    console.log(actor);
-
     if (actor === undefined) {
       throw new Error(`${id} Not Found`);
     }
