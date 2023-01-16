@@ -1,4 +1,4 @@
-import { Field, InputType } from "type-graphql";
+import { Field, InputType, ID } from "type-graphql";
 
 @InputType()
 export default class CreateUpdateMessageInput {
@@ -8,7 +8,7 @@ export default class CreateUpdateMessageInput {
   @Field()
   message!: string
 
-  @Field()
+  @Field(() => ID)
   // @ts-ignore-next-line
   conversationId!: ID
 }

@@ -11,7 +11,7 @@ export default class CreateUpdateActorInput {
   @Field()
   description!: string
 
-  @Field()
+  @Field(() => ID)
   // @ts-ignore-next-line
   campaignId!: ID
 

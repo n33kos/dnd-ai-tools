@@ -15,7 +15,7 @@ export default class Location {
   @Field()
   @Column()
   // @ts-ignore-next-line
-  campaignId: ID
+  campaignId: number
 
   @Field()
   @Column()

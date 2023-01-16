@@ -4,6 +4,10 @@ import type { PageConfig } from "next";
 import { buildSchema } from "type-graphql";
 import CampaignResolver from "../../../src/resolvers/CampaignResolver";
 import SqliteDataSource from "../../../src/SqliteDataSource";
+import ActorResolver from "../../../src/resolvers/ActorResolver";
+import ConversationResolver from "../../../src/resolvers/ConversationResolver";
+import LocationResolver from "../../../src/resolvers/LocationResolver";
+import MessageResolver from "../../../src/resolvers/MessageResolver";
 
 // disable next js from handling this route
 export const config: PageConfig = {
@@ -16,7 +20,13 @@ export const config: PageConfig = {
 const dataSource = await SqliteDataSource.getInstance();
 
 const schema = await buildSchema({
-  resolvers: [CampaignResolver],
+  resolvers: [
+    ActorResolver,
+    CampaignResolver,
+    ConversationResolver,
+    LocationResolver,
+    MessageResolver,
+  ],
   validate: false,
 })
 

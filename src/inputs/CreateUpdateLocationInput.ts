@@ -1,4 +1,4 @@
-import { Field, InputType } from "type-graphql";
+import { Field, InputType, ID } from "type-graphql";
 
 @InputType()
 export default class CreateUpdateLocationInput {
@@ -11,7 +11,7 @@ export default class CreateUpdateLocationInput {
   @Field()
   description!: string
 
-  @Field()
+  @Field(() => ID)
   // @ts-ignore-next-line
   campaignId!: ID
 }

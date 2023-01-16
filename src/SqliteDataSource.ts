@@ -1,6 +1,10 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
+import Actor from "./entities/Actor";
 import Campaign from "./entities/Campaign"
+import Conversation from "./entities/Conversation";
+import Location from "./entities/Location";
+import Message from "./entities/Message";
 
 export default class SqliteDataSource {
   private static dataSource: DataSource;
@@ -13,7 +17,11 @@ export default class SqliteDataSource {
         synchronize: true,
         logging: false,
         entities: [
+          Actor,
           Campaign,
+          Conversation,
+          Location,
+          Message,
         ],
         migrations: [],
         subscribers: [],

@@ -6,8 +6,10 @@ import BaseResolver from "./BaseResolver";
 @Resolver(Actor)
 export default class ActorResolver extends BaseResolver {
   @Query(() => Actor, { nullable: true })
-  // @ts-ignore-next-line
-  async actor(@Arg("id") id: ID) {
+  async actor(
+    // @ts-ignore-next-line
+    @Arg("id") id: ID,
+  ) {
     const entityManager = await this.getEntityManager();
     const actor = await entityManager.findOneBy(Actor, { id });
 
@@ -21,9 +23,10 @@ export default class ActorResolver extends BaseResolver {
   async actors(
     // @ts-ignore-next-line
     @Arg("campaignId") campaignId: ID,
+    @Arg("actorType", { nullable: true }) actorType: string,
   ) {
     const entityManager = await this.getEntityManager();
-    return entityManager.findBy(Actor, { campaignId });
+    return entityManager.findBy(Actor, { campaignId, actorType });
   }
 
   @Mutation(() => Actor)

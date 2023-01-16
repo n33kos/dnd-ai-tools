@@ -15,7 +15,7 @@ export default class Message {
   @Field()
   @Column()
   // @ts-ignore-next-line
-  conversationId: ID
+  conversationId: number
 
   @Field()
   @Column()

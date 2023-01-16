@@ -1,7 +1,7 @@
-import { Field, InputType } from "type-graphql";
+import { Field, InputType, ID } from "type-graphql";
 
 @InputType()
-export default class CreateUpdateCampaignInput {
+export default class CreateUpdateConversationInput {
   @Field({ nullable: true })
   id?: number
 
@@ -11,7 +11,7 @@ export default class CreateUpdateCampaignInput {
   @Field()
   description!: string
 
-  @Field()
+  @Field(() => ID)
   // @ts-ignore-next-line
   campaignId!: ID
 }

@@ -22,17 +22,22 @@ export default (props: OptionListProps) => {
   const enterPressed = useKeyPress('Enter');
 
   const optionsReducer = (state, action) => {
+    let selectedIndex;
     switch (action.type) {
       case 'arrowUp':
-        return {
-          selectedIndex:
-            state.selectedIndex !== 0 ? state.selectedIndex - 1 : options.length - 1,
-        };
+        selectedIndex = state.selectedIndex !== 0 ? state.selectedIndex - 1 : options.length - 1;
+        if (!options[selectedIndex].onClick && !options[selectedIndex].href) {
+          selectedIndex = selectedIndex !== 0 ? selectedIndex - 1 : options.length - 1;
+        }
+
+        return {selectedIndex};
       case 'arrowDown':
-        return {
-          selectedIndex:
-            state.selectedIndex !== options.length - 1 ? state.selectedIndex + 1 : 0,
-        };
+        selectedIndex = state.selectedIndex !== options.length - 1 ? state.selectedIndex + 1 : 0;
+        if (!options[selectedIndex].onClick && !options[selectedIndex].href) {
+          selectedIndex = selectedIndex !== options.length - 1 ? selectedIndex + 1 : 0;
+        }
+
+        return {selectedIndex};
       case 'select':
         return { selectedIndex: action.payload };
       default:
@@ -72,26 +77,34 @@ export default (props: OptionListProps) => {
     <ul>
       {options.map((option, i) => (
         <div key={option.id} className={styles.Option}>
-          <Link
-            className={`
-              ${styles.Title}
-              ${i === selectedOptionState.selectedIndex ? styles.Selected : ""}
-            `}
-            href={option.href}
-            onClick={option.onClick}
-            role="button"
-            aria-pressed={i === selectedOptionState.selectedIndex}
-            tabIndex={0}
-            onFocus={() => dispatch({ type: 'select', payload: i })}
-            onKeyPress={(e: any) => {
-              if (e.key === 'Enter') {
-                selectOption();
-                e.target.blur();
-              }
-            }}
-          >
-            {option.title}
-          </Link>
+          {(!option.href && !option.onClick) && (
+            <div className={styles.Title}>
+              {option.title}
+            </div>
+          )}
+
+          {(option.href || option.onClick) && (
+            <Link
+              className={`
+                ${styles.Title}
+                ${i === selectedOptionState.selectedIndex ? styles.Selected : ""}
+              `}
+              href={option.href}
+              onClick={option.onClick}
+              role="button"
+              aria-pressed={i === selectedOptionState.selectedIndex}
+              tabIndex={0}
+              onFocus={() => dispatch({ type: 'select', payload: i })}
+              onKeyPress={(e: any) => {
+                if (e.key === 'Enter') {
+                  selectOption();
+                  e.target.blur();
+                }
+              }}
+            >
+              {option.title}
+            </Link>
+          )}
         </div>
       ))}
     </ul>

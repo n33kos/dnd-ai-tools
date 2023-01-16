@@ -1,37 +1,63 @@
 import { useQuery } from '@apollo/client';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { AllActors } from '../../../graph/actor';
 import { FindCampaign } from '../../../graph/campaign';
 import OptionList from '../../shared/OptionList/OptionList';
-import styles from './Campaign.module.scss';
+// import styles from './Campaign.module.scss';
 
 export default () => {
   const router = useRouter()
   const { id } = router.query
   const { data, loading } = useQuery(FindCampaign, {variables: { id }})
+  const { data: npcData } = useQuery(AllActors, { variables: { campaignId: id, actorType: "NPC" } })
+
   const campaign = data?.campaign || [];
+  const npcs = npcData?.actors || [];
+
+  console.log(npcs);
 
   const options = [
     {
-      id: 1,
+      id: 0,
       title: "NPCs",
-      href: "/npcs",
     },
+    {
+      id: 1,
+      title: "New NPC",
+      href: `/npcs/new?campaignId=${id}`
+    },
+    ...npcs.map(npc => ({
+      id: `npc-${npc.id}`,
+      title: npc.name,
+      href: `/npcs/${npc.id}`
+    })),
     {
       id: 2,
       title: "PCs",
-      href: "/pcs",
     },
     {
       id: 3,
-      title: "Conversations",
-      href: "/conversations",
+      title: "New PC",
+      href: "/pcs/new"
     },
     {
       id: 4,
-      title: "Locations",
-      href: "/locations",
+      title: "Conversations",
     },
+    {
+      id: 5,
+      title: "New Conversation",
+      href: "/conversations/new"
+    },
+    {
+      id: 6,
+      title: "Locations",
+    },
+    {
+      id: 7,
+      title: "New Location",
+      href: "/locations/new"
+    }
   ];
 
   return (

@@ -19,7 +19,7 @@ export default class Actor {
   @Field()
   @Column()
   // @ts-ignore-next-line
-  campaignId: ID
+  campaignId: number
 
   @Field()
   @Column()
