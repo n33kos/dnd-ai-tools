@@ -1,5 +1,7 @@
-# DND AI Tools
-`DND AI Tools` is an AI assisted dungeon master toolset leveraging openAI's chat API to assist in the generation of campaigns, characters, locations, and most importantly _*conversations between groups of NPCs and Players*_.
+# dnd-ai-tools
+`dnd-ai-tools` is an AI assisted dungeon master toolset leveraging openAI's chat API to assist in the generation of campaigns, characters, locations, and most importantly _*conversations between groups of NPCs and Players*_.
+
+This toolset uses a series of prompt functions to generate content. The generated content is stored in a SQLite local database and is then fed back into the prompts to provide the chat API with additional context. The result is a more natural conversation between multiple NPCs and Players where the actors maintain their "voice".
 
 ![Example Conversation](./public/conversation-example.gif)
 
@@ -50,7 +52,7 @@ Conversations are currently the core feature of the app. They allow you to gener
 - You can also use the dropdown to select a character to have a message generated for them by OpenAI.
 
 ## TODO
-This is still a work in progress and I haven't decided how it will be best utilized. After some testing, I may change directions completely and use this as an interface for having single-player DND adventures. Regardless, here are some features I've considered:
+This is still a work in progress and I haven't decided how it will be best utilized. After some testing, I may end up converting this into an interface for having single-player DND adventures. Regardless, here are some features I've considered:
 - Add ability to edit campaigns, actors, locations, and conversations
 - Add ability to delete campaigns, actors, locations, and conversations
 - Add ability to add images to campaigns, actors, locations, and conversations (maybe)
