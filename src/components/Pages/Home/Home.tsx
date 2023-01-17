@@ -10,13 +10,11 @@ export default () => {
 
   const options = [
     {
-      id: 0,
       title: "* New Campaign",
       href: "/campaigns/new",
     },
   ].concat(
     campaigns.map((campaign) => ({
-      id: campaign.id,
       title: campaign.title,
       href: `/campaigns/${campaign.id}`
     }))

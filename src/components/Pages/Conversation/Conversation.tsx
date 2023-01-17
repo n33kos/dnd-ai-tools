@@ -24,7 +24,6 @@ export default () => {
 
   const options = [
     {
-      id: 1,
       title: "Back To Campaign",
       href: `/campaigns/${conversation?.campaignId}`
     }

@@ -21,44 +21,44 @@ export default () => {
 
   const options = [
     {
-      id: 0,
-      title: "Actors",
+      selectable: false,
+      render: () => (
+        <h3>Actors</h3>
+      )
     },
     {
-      id: 1,
       title: "+ New Actor",
       href: `/actors/new?campaignId=${id}`
     },
     ...actors.map(actor => ({
-      id: `actor-${actor.id}`,
       title: actor.name,
       href: `/actors/${actor.id}`,
     })),
     {
-      id: 4,
-      title: "Conversations",
+      selectable: false,
+      render: () => (
+        <h3>Conversations</h3>
+      )
     },
     {
-      id: 5,
       title: "+ New Conversation",
       href: `/conversations/new?campaignId=${id}`
     },
     ...conversations.map(conversation => ({
-      id: `conversation-${conversation.id}`,
       title: conversation.title,
       href: `/conversations/${conversation.id}`,
     })),
     {
-      id: 6,
-      title: "Locations",
+      selectable: false,
+      render: () => (
+        <h3>Locations</h3>
+      )
     },
     {
-      id: 7,
       title: "+ New Location",
       href: `/locations/new?campaignId=${id}`,
     },
     ...locations.map(location => ({
-      id: `location-${location.id}`,
       title: location.title,
       href: `/locations/${location.id}`,
     })),
