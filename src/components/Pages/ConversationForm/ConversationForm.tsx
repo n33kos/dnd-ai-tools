@@ -1,7 +1,9 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
+import { FindCampaign } from '../../../graph/campaign';
 import { CreateUpdateConversation } from '../../../graph/conversation';
+import { GenerateConversationDescriptionPrompt, GenerateConversationNamePrompt } from '../../../prompts/ConversationPrompts';
 import ActorSelect from '../../shared/ActorSelect/ActorSelect';
 import Input from '../../shared/Input/Input';
 import OptionList from '../../shared/OptionList/OptionList';
@@ -11,9 +13,12 @@ import styles from './ConversationForm.module.scss';
 export default () => {
   const router = useRouter()
   const { campaignId } = router.query
-  const [createUpdateConversation, { data, loading, error }] = useMutation(CreateUpdateConversation);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [createUpdateConversation, { data, loading, error }] = useMutation(CreateUpdateConversation);
+  const { data: campaignData } = useQuery(FindCampaign, { variables: { id: campaignId }, skip: !campaignId });
+
+  const campaign = campaignData?.campaign || {};
 
   const options = [
     {
@@ -29,15 +34,15 @@ export default () => {
         <div>Title:</div>
         <Input
           value={title}
-          onChange={(val) => setTitle(val)}
-          randomizePrompt="Give me the unquoted name of a unique dungeons and dragons conversation: "
+          onChange={(val) => setTitle(val.replace(/^"(.*)"$/, '$1'))}
+          randomizePrompt={GenerateConversationNamePrompt(campaign.name, campaign.description, title)}
         />
 
         <div>Description:</div>
         <TextArea
           value={description}
           onChange={(val) => setDescription(val)}
-          randomizePrompt={`Give me a paragraph description for a unique dungeons and dragons conversation${title ? " entitled " + title : ""}:`}
+          randomizePrompt={GenerateConversationDescriptionPrompt(campaign.name, campaign.description, title, description)}
         />
 
         {error && (<div>{error.message}</div>)}
@@ -62,6 +67,8 @@ export default () => {
           {loading ? "Loading..." : "Create Conversation"}
         </button>
       </ul>
+
+      <br />
 
       <OptionList options={options} />
     </div>

@@ -1,7 +1,9 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
 import { CreateUpdateActor } from '../../../graph/actor';
+import { FindCampaign } from '../../../graph/campaign';
+import { GenerateActorDescriptionPrompt, GenerateActorNamePrompt } from '../../../prompts/ActorPrompts';
 import Input from '../../shared/Input/Input';
 import OptionList from '../../shared/OptionList/OptionList';
 import TextArea from '../../shared/TextArea/TextArea';
@@ -13,10 +15,12 @@ export default () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [actorType, setActorType] = useState("NPC");
+  const { data: campaignData } = useQuery(FindCampaign, { variables: { id: campaignId }, skip: !campaignId });
+
+  const campaign = campaignData?.campaign || {};
 
   const options = [
     {
-      id: 1,
       title: "Back To Campaign",
       href: `/campaigns/${campaignId}`
     }
@@ -29,8 +33,9 @@ export default () => {
         <div>Name:</div>
         <Input
           value={name}
-          onChange={(val) => setName(val)}
-          randomizePrompt="Give me the unquoted name of a unique dungeons and dragons character: "
+          placeholder="Enter name or custom prompt"
+          onChange={(val) => setName(val.replace(/^"(.*)"$/, '$1'))}
+          randomizePrompt={GenerateActorNamePrompt(campaign.name, campaign.description, name)}
         />
 
         <div>Actor Type</div>
@@ -44,8 +49,9 @@ export default () => {
         <div>Description:</div>
         <TextArea
           value={description}
+          placeholder="Enter description or custom prompt"
           onChange={(val) => setDescription(val)}
-          randomizePrompt={`Give me a paragraph description for a unique dungeons and dragons character${name ? " named " + name : ""}:`}
+          randomizePrompt={GenerateActorDescriptionPrompt(campaign.name, campaign.description, name, description)}
         />
 
         {error && (
@@ -75,6 +81,8 @@ export default () => {
           {loading ? "Loading..." : "Create Actor"}
         </button>
       </ul>
+
+      <br />
 
       <OptionList options={options} />
     </div>

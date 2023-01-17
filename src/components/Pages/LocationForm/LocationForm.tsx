@@ -32,15 +32,15 @@ export default () => {
         <div>Title:</div>
         <Input
           value={title}
-          onChange={(val) => setTitle(val)}
-          randomizePrompt={GenerateLocationNamePrompt(campaign.title, campaign.description)}
+          onChange={(val) => setTitle(val.replace(/^"(.*)"$/, '$1'))}
+          randomizePrompt={GenerateLocationNamePrompt(campaign.title, campaign.description, title)}
         />
 
         <div>Description:</div>
         <TextArea
           value={description}
           onChange={(val) => setDescription(val)}
-          randomizePrompt={GenerateLocationDescriptionPrompt(campaign.title, campaign.description, title)}
+          randomizePrompt={GenerateLocationDescriptionPrompt(campaign.title, campaign.description, title, description)}
         />
 
         {error && (
@@ -69,6 +69,8 @@ export default () => {
           {loading ? "Loading..." : "Create Location"}
         </button>
       </ul>
+
+      <br />
 
       <OptionList options={options} />
     </div>

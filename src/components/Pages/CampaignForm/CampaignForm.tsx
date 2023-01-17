@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client';
 import Router from 'next/router';
 import { useState } from 'react';
 import { CreateUpdateCampaign } from '../../../graph/campaign';
+import { GenerateCampaignDescriptionPrompt, GenerateCampaignNamePrompt } from '../../../prompts/CampaignPrompts';
 import Input from '../../shared/Input/Input';
 import OptionList from '../../shared/OptionList/OptionList';
 import TextArea from '../../shared/TextArea/TextArea';
@@ -13,7 +14,6 @@ export default () => {
 
   const options = [
     {
-      id: 1,
       title: "Back To Home",
       href: `/`
     }
@@ -26,15 +26,15 @@ export default () => {
         <div>Title:</div>
         <Input
           value={title}
-          onChange={(val) => setTitle(val)}
-          randomizePrompt="Give me the unquoted name of a unique dungeons and dragons campaign: "
+          onChange={(val) => setTitle(val.replace(/^"(.*)"$/, '$1'))}
+          randomizePrompt={GenerateCampaignNamePrompt(title)}
         />
 
         <div>Description:</div>
         <TextArea
           value={description}
           onChange={(val) => setDescription(val)}
-          randomizePrompt={`Give me a paragraph description for a unique dungeons and dragons campaign${title ? " entitled " + title : ""}:`}
+          randomizePrompt={GenerateCampaignDescriptionPrompt(title, description)}
         />
 
         {error && (
@@ -61,6 +61,8 @@ export default () => {
           {loading ? "Loading..." : "Create Campaign"}
         </button>
       </ul>
+
+      <br />
 
       <OptionList options={options} />
     </div>

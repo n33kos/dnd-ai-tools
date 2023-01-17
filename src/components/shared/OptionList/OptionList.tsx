@@ -70,7 +70,7 @@ export default (props: OptionListProps) => {
   useEffect(() => {
     scroller.scrollTo('selected-option', {
       duration: 600,
-      delay: 0,
+      delay: 300,
       smooth: 'easeInOutQuart'
     });
   }, [selectedOptionState.selectedIndex])
