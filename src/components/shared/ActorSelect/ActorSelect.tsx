@@ -1,5 +1,3 @@
-// reusable react component which selects an actor from a list of actors in the campaign
-
 import { useQuery } from "@apollo/client";
 import { AllActors } from "../../../graph/actor";
 

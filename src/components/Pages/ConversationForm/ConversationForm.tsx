@@ -4,11 +4,9 @@ import { useState } from 'react';
 import { FindCampaign } from '../../../graph/campaign';
 import { CreateUpdateConversation } from '../../../graph/conversation';
 import { GenerateConversationDescriptionPrompt, GenerateConversationNamePrompt } from '../../../prompts/ConversationPrompts';
-import ActorSelect from '../../shared/ActorSelect/ActorSelect';
 import Input from '../../shared/Input/Input';
 import OptionList from '../../shared/OptionList/OptionList';
 import TextArea from '../../shared/TextArea/TextArea';
-import styles from './ConversationForm.module.scss';
 
 export default () => {
   const router = useRouter()

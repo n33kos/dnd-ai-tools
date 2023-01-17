@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FindLocation } from '../../../graph/location';
 import OptionList from '../../shared/OptionList/OptionList';

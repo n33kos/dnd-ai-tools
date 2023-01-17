@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { FindActor } from '../../../graph/actor';
 import OptionList from '../../shared/OptionList/OptionList';
-// import styles from './Npc.module.scss';
 
 export default () => {
   const router = useRouter()
@@ -13,12 +12,10 @@ export default () => {
 
   const options = [
     {
-      id: 0,
       title: "Go To Conversation",
       href: `/conversations?npcId=${id}`
     },
     {
-      id: 1,
       title: "Back To Campaign",
       href: `/campaigns/${npc.campaignId}`
     }
