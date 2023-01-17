@@ -34,6 +34,7 @@ export default () => {
         <div>Title:</div>
         <Input
           value={title}
+          placeholder="Enter title or custom prompt"
           onChange={(val) => setTitle(val.replace(/^"(.*)"$/, '$1'))}
           randomizePrompt={GenerateConversationNamePrompt(campaign.name, campaign.description, title)}
         />
@@ -41,6 +42,7 @@ export default () => {
         <div>Description:</div>
         <TextArea
           value={description}
+          placeholder="Enter description or custom prompt"
           onChange={(val) => setDescription(val)}
           randomizePrompt={GenerateConversationDescriptionPrompt(campaign.name, campaign.description, title, description)}
         />
