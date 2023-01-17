@@ -10,7 +10,7 @@ export default () => {
 
   const options = [
     {
-      title: "* New Campaign",
+      title: "+ New Campaign",
       href: "/campaigns/new",
     },
   ].concat(
