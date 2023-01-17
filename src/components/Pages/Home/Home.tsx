@@ -23,10 +23,8 @@ export default () => {
   return (
     <div>
       <h1>D&D AI Tools</h1>
-
-      {loading && (<div>Loading...</div>)}
-
       <OptionList options={options}/>
+      {loading && (<div>Loading...</div>)}
     </div>
   );
 }
