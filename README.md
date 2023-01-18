@@ -31,16 +31,25 @@ You should now be able to access the app at [http://localhost:3000](http://local
 - Create a campaign by clicking the `+New Campaign` button. This will bring you to a form where you can generate a new campaign.
 - You can choose to hit the dice icon to use OpenAI to generate the campaign name or description.
 - If you want to pass a custom prompt, enter it into the field before hitting the dice icon.
+![Example Create Campaign](./public/create-campaign.gif)
 
 ### Actors
 - Create an actor by clicking the `+New Actor` button within a campaign. This will bring you to a form where you can generate a new actor.
 - You can choose to hit the dice icon to use OpenAI to generate the actor name or description.
 - If you want to pass a custom prompt, enter it into the field before hitting the dice icon. This will still maintain the context of the campaign name and description
+![Example Create Actor](./public/create-actor.gif)
+
+### Items
+- Create an item by clicking the `+New Item` button within a campaign. This will bring you to a form where you can generate a new item.
+- You can choose to hit the dice icon to use OpenAI to generate the item name or description.
+- If you want to pass a custom prompt, enter it into the field before hitting the dice icon. This will still maintain the context of the campaign name and description
+![Example Create Item](./public/create-item.gif)
 
 ### Locations
 - Create a location by clicking the `+New Location` button within a campaign. This will bring you to a form where you can generate a new location.
 - You can choose to hit the dice icon to use OpenAI to generate the location name or description.
 - If you want to pass a custom prompt, enter it into the field before hitting the dice icon. This will still maintain the context of the campaign name and description
+![Example Create Location](./public/create-location.gif)
 
 ### Conversations
 Conversations are currently the core feature of the app. They allow you to generate conversations between any number of actors in a campaign. The conversation is generated using OpenAI's chat API. The conversation is generated using full context of the campaign, the names and descriptions of the characters speaking, and the description of the conversation they are having.
@@ -50,6 +59,7 @@ Conversations are currently the core feature of the app. They allow you to gener
 - If you want to pass a custom prompt, enter it into the field before hitting the dice icon. This will still maintain the context of the campaign name and description
 - Once in a conversation, use the dropdown to select a character, then enter text into the chat box to create a message as that actor.
 - You can also use the dropdown to select a character to have a message generated for them by OpenAI.
+![Example Create Conversation](./public/create-conversation.gif)
 
 ## TODO
 This is still a work in progress and I haven't decided how it will be best utilized. After some testing, I may end up converting this into an interface for having single-player DND adventures. Regardless, here are some features I've considered:

@@ -28,7 +28,7 @@ export default () => {
 
   return (
     <div>
-      <h1>Create A New NPC</h1>
+      <h1>Create A New Actor</h1>
       <ul>
         <div>Name:</div>
         <Input
