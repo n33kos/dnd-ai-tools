@@ -79,6 +79,16 @@ export default () => {
       title: conversation.title,
       href: `/conversations/${conversation.id}`,
     })),
+    {
+      selectable: false,
+      render: () => (
+        <h3>----------------------</h3>
+      )
+    },
+    {
+      title: "Back To Home",
+      href: `/`
+    }
   ];
 
   return (
