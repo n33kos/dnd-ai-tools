@@ -44,6 +44,16 @@ export class InitialTableCreation1673891728991 implements MigrationInterface {
             );
         `);
         await queryRunner.query(`
+            CREATE TABLE "items" (
+                "id" integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+                "name" varchar NOT NULL,
+                "campaignId" integer NOT NULL,
+                "description" varchar NOT NULL,
+                "createdAt" datetime NOT NULL,
+                "updatedAt" datetime NOT NULL
+            );
+        `);
+        await queryRunner.query(`
             CREATE TABLE "messages" (
                 "id" integer PRIMARY KEY AUTOINCREMENT NOT NULL,
                 "message" varchar NOT NULL,
@@ -59,6 +69,7 @@ export class InitialTableCreation1673891728991 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE "actors";`);
         await queryRunner.query(`DROP TABLE "campaigns";`);
         await queryRunner.query(`DROP TABLE "conversations";`);
+        await queryRunner.query(`DROP TABLE "items";`);
         await queryRunner.query(`DROP TABLE "locations";`);
         await queryRunner.query(`DROP TABLE "messages";`);
     }
