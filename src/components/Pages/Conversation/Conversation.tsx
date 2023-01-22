@@ -125,7 +125,7 @@ export default () => {
               })
             }}
               >
-            {sendMessagLoading ? "Loading..." : "Create Message"}
+            {sendMessagLoading ? "Loading..." : "Save Message"}
           </button>
         </div>
       </div>

@@ -60,7 +60,7 @@ export default () => {
               },
             })}}
         >
-          {loading ? "Loading..." : "Create Campaign"}
+          {loading ? "Loading..." : "Save Campaign"}
         </button>
       </ul>
 

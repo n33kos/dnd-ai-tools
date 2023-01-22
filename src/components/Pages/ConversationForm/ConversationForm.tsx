@@ -64,7 +64,7 @@ export default () => {
             })
           }}
         >
-          {loading ? "Loading..." : "Create Conversation"}
+          {loading ? "Loading..." : "Save Conversation"}
         </button>
       </ul>
 

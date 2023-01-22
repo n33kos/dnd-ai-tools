@@ -78,7 +78,7 @@ export default () => {
             })
           }}
         >
-          {loading ? "Loading..." : "Create Actor"}
+          {loading ? "Loading..." : "Save Actor"}
         </button>
       </ul>
 
