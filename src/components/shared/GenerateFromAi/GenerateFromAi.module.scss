@@ -1,26 +1,19 @@
 .Button {
-  border: none !important;
-  width: 32px;
-  height: 32px;
-  background-image: url('/dice.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 32px;
-  image-rendering: pixelated;
+  @include icon-button('/dice.png');
 }
 
 .Loading {
-  animation: pulse 1s infinite;
+  animation: pulse 0.5ss infinite;
 }
 
 @keyframes pulse {
   0% {
-    opacity: 0.5;
+    opacity: 0.35;
   }
   50% {
     opacity: 1;
   }
   100% {
-    opacity: 0.5;
+    opacity: 0.35;
   }
 }

@@ -6,6 +6,7 @@ import { FindCampaign } from '../../../graph/campaign';
 import { GenerateActorDescriptionPrompt, GenerateActorNamePrompt } from '../../../prompts/ActorPrompts';
 import Input from '../../shared/Input/Input';
 import OptionList from '../../shared/OptionList/OptionList';
+import Select from '../../shared/Select/Select';
 import TextArea from '../../shared/TextArea/TextArea';
 
 export default () => {
@@ -40,10 +41,10 @@ export default () => {
 
         <div>Actor Type</div>
         <div>
-          <select onChange={ (e) => setActorType(e.currentTarget.value) }>
+          <Select onChange={ (value) => setActorType(value) }>
             <option value="NPC" selected={actorType === "NPC"}>NPC</option>
             <option value="PC" selected={actorType === "PC"}>PC</option>
-          </select>
+          </Select>
         </div>
 
         <div>Description:</div>

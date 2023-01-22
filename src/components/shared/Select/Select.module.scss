@@ -1,0 +1,24 @@
+.SelectWrapper {
+  position: relative;
+  display: block;
+}
+
+.DropdownArrow {
+  @include icon-button('/dropdown-arrow.png');
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+}
+
+.Select {
+  appearance: none;
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Safari, Chrome, Opera */
+  -webkit-appearance: none;
+  padding-right: 16px;
+  cursor: pointer;
+}

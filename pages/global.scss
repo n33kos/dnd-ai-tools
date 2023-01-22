@@ -9,8 +9,8 @@ html {
 }
 
 body {
-  background-color: black;
-  color: white;
+  background-color: $color-secondary;
+  color: $color-primary;
   font-family: 'VT323';
   font-size: 32px;
   letter-spacing: 0.075em;
@@ -24,13 +24,13 @@ body {
   font-smooth: never;
 
   ::-moz-selection {
-    color: black;
-    background-color: white;
+    color: $color-secondary;
+    background-color: $color-primary;
   }
 
   ::selection {
-    color: black;
-    background-color: white;
+    color: $color-secondary;
+    background-color: $color-primary;
   }
 }
 
@@ -41,7 +41,7 @@ ul, ol {
 
 a, a:visited {
   font-family: 'VT323';
-  color: white;
+  color: $color-primary;
   text-decoration: underline;
   padding: 0;
   margin: 0;
@@ -49,15 +49,15 @@ a, a:visited {
 
 a:hover, a:focus, a:active {
   outline: none;
-  color: black;
-  background-color: white;
+  color: $color-secondary;
+  background-color: $color-primary;
 }
 
 button {
   font-family: 'VT323';
-  border: 2px solid white;
+  border: 2px solid $color-primary;
   background: none;
-  color: white;
+  color: $color-primary;
   font-size: 32px;
   padding: 8px;
   display: block;
@@ -69,15 +69,19 @@ input, textarea, select {
   font-family: 'VT323';
   letter-spacing: 0.1em;
   font-size: 32px;
-  color: white;
+  color: $color-primary;
   box-sizing: border-box;
-  background-color: black;
-  border: 2px solid white;
+  background-color: $color-secondary;
+  border: 2px solid $color-primary;
   min-width: 320px;
   min-height: 30px;
   padding: 8px;
   width: 100%;
   margin-bottom: 16px;
+
+  &::placeholder {
+    color: rgba($color-primary, 0.25);
+  }
 
   &:focus {
     outline: none;
@@ -85,18 +89,5 @@ input, textarea, select {
 }
 
 textarea {
-  min-height: 175px;
-}
-
-select {
-  appearance: none;
-  /* for Firefox */
-  -moz-appearance: none;
-  /* for Safari, Chrome, Opera */
-  -webkit-appearance: none;
-  padding-right: 16px;
-  background-image: url('/dropdown-arrow.png');
-  background-repeat: no-repeat;
-  background-position: calc(100% - 8px) center;
-  background-size: 16px;
+  min-height: 200px;
 }

@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { AllActors } from "../../../graph/actor";
+import Select from "../Select/Select";
 
 interface ActorSelectProps {
   className?: string;
@@ -8,14 +9,14 @@ interface ActorSelectProps {
 }
 
 export default (props: ActorSelectProps) => {
-  const { campaignId, onSelect } = props;
+  const { className, campaignId, onSelect } = props;
   const { data: actorsData, loading } = useQuery(AllActors, { variables: { campaignId }, skip: !campaignId });
   const actors = actorsData?.actors || [];
 
   return (
-    <select
-      className={props.className}
-      onChange={(e) => onSelect(actors.find(actor => actor.id === e.target.value))}
+    <Select
+      className={className}
+      onChange={(value) => onSelect(actors.find(actor => actor.id === value))}
     >
       {loading && <option>Loading...</option>}
       <option>Select an Actor</option>
@@ -24,6 +25,6 @@ export default (props: ActorSelectProps) => {
           {actor.name} ({actor.actorType})
         </option>
       ))}
-    </select>
+    </Select>
   );
 }

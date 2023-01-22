@@ -14,7 +14,7 @@ export default (props: GenerateFromAiProps) => {
 
   return (
     <button
-      className={`${styles.Button} ${className} ${loading ? styles.Loading : ""}`}
+      className={`${styles.Button} ${className || ""} ${loading ? styles.Loading : ""}`}
       type="button"
       onClick={() => {
         generateFromPrompt({

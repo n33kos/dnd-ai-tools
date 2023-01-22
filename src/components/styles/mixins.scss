@@ -1,0 +1,25 @@
+@mixin button-reset {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+@mixin icon-button($imageUrl) {
+  @include button-reset;
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  background-color: $color-primary;
+
+  mask-image: url($imageUrl);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url($imageUrl);
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
