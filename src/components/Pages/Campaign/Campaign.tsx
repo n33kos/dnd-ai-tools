@@ -1,20 +1,22 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { AllActors } from '../../../graph/actor';
-import { FindCampaign } from '../../../graph/campaign';
+import { CreateUpdateCampaign, FindCampaign } from '../../../graph/campaign';
 import { AllConversations } from '../../../graph/conversation';
 import { AllItems } from '../../../graph/item';
 import { AllLocations } from '../../../graph/location';
+import EditableText from '../../shared/EditableText/EditableText';
 import OptionList from '../../shared/OptionList/OptionList';
 
 export default () => {
   const router = useRouter()
   const { id } = router.query
-  const { data, loading } = useQuery(FindCampaign, {variables: { id }})
-  const { data: actorsData } = useQuery(AllActors, { variables: { campaignId: id } });
-  const { data: conversationData } = useQuery(AllConversations, { variables: { campaignId: id } });
-  const { data: locationData } = useQuery(AllLocations, { variables: { campaignId: id } });
-  const { data: itemData } = useQuery(AllItems, { variables: { campaignId: id } });
+  const { data, loading } = useQuery(FindCampaign, { variables: { id }, skip: !id })
+  const { data: actorsData } = useQuery(AllActors, { variables: { campaignId: id }, skip: !id });
+  const { data: conversationData } = useQuery(AllConversations, { variables: { campaignId: id }, skip: !id });
+  const { data: locationData } = useQuery(AllLocations, { variables: { campaignId: id }, skip: !id });
+  const { data: itemData } = useQuery(AllItems, { variables: { campaignId: id }, skip: !id });
+  const [createUpdateCampaignMutation] = useMutation(CreateUpdateCampaign);
 
   const campaign = data?.campaign || [];
   const actors = actorsData?.actors || [];
@@ -95,9 +97,33 @@ export default () => {
     <div>
       {loading && (<div>Loading...</div>)}
 
-      <h1>{campaign.title}</h1>
+      <h1>
+        <EditableText
+          value={campaign.title}
+          onSave={(title) => createUpdateCampaignMutation({
+            variables: {
+              data: {
+                ...campaign,
+                __typename: undefined,
+                title,
+              }
+            }
+          })}
+        />
+      </h1>
       <p>
-        {campaign.description}
+        <EditableText
+          value={campaign.description}
+          onSave={(description) => createUpdateCampaignMutation({
+            variables: {
+              data: {
+                ...campaign,
+                __typename: undefined,
+                description,
+              }
+            }
+          })}
+        />
       </p>
 
       <OptionList options={options} />

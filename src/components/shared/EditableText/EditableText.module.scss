@@ -1,0 +1,77 @@
+.EditableText {
+  position: relative;
+}
+
+.TextArea {
+  padding: 8px 64px 8px 8px;
+  border: 2px solid transparent;
+  height: auto;
+  overflow: hidden;
+  resize: none;
+  min-height: auto;
+  font-size: inherit;
+
+  .isEditing & {
+    border: 2px solid $color-primary;
+    resize: vertical;
+  }
+}
+
+.Buttons {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  display: none;
+  padding: 8px;
+
+  .EditableText:hover & {
+    display: block;
+  }
+
+  .EditableText.isEditing:hover & {
+    background-color: $color-secondary;
+    border: 2px solid $color-primary;
+  }
+}
+
+.EditButton,
+.CancelButton,
+.SaveButton {
+  border: none !important;
+  width: 32px;
+  height: 32px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 32px;
+  cursor: pointer;
+  image-rendering: pixelated;
+}
+
+.EditButton {
+  @include icon-button('/edit.png');
+  display: block;
+
+  .isEditing & {
+    display: none;
+  }
+}
+
+.CancelButton {
+  @include icon-button('/cancel.png');
+  display: none;
+
+  .isEditing & {
+    display: block;
+  }
+}
+
+.SaveButton {
+  @include icon-button('/save.png');
+  display: none;
+
+  .isEditing & {
+    display: block;
+  }
+}

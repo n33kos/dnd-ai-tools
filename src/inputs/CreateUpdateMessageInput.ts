@@ -2,8 +2,8 @@ import { Field, InputType, ID } from "type-graphql";
 
 @InputType()
 export default class CreateUpdateMessageInput {
-  @Field({ nullable: true })
-  id?: number
+  @Field(() => ID, { nullable: true })
+  id?: GraphqlID
 
   @Field()
   message!: string

@@ -1,9 +1,9 @@
-import { Field, InputType } from "type-graphql";
+import { Field, InputType, ID } from "type-graphql";
 
 @InputType()
 export default class CreateUpdateCampaignInput {
-  @Field({ nullable: true })
-  id?: number
+  @Field(() => ID, { nullable: true })
+  id?: GraphqlID
 
   @Field()
   title!: string

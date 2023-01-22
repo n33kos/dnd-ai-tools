@@ -2,8 +2,8 @@ import { Field, InputType, ID } from "type-graphql";
 
 @InputType()
 export default class CreateUpdateActorInput {
-  @Field({ nullable: true })
-  id?: number
+  @Field(() => ID, { nullable: true })
+  id?: GraphqlID
 
   @Field()
   name!: string

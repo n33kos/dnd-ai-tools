@@ -2,11 +2,12 @@ import { Element, scroller } from 'react-scroll'
 import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { FindConversation } from '../../../graph/conversation';
+import { CreateUpdateConversation, FindConversation } from '../../../graph/conversation';
 import { AllMessages, CreateUpdateMessage, GenerateAIMessage } from '../../../graph/message';
 import ActorSelect from '../../shared/ActorSelect/ActorSelect';
 import OptionList from '../../shared/OptionList/OptionList';
 import styles from './Conversation.module.scss';
+import EditableText from '../../shared/EditableText/EditableText';
 
 export default () => {
   const { query: { id } } = useRouter();
@@ -16,6 +17,7 @@ export default () => {
   const [createUpdateMessage, { loading: sendMessagLoading }] = useMutation(CreateUpdateMessage);
   const [generateAIMessage, { loading: generateAIMessageLoading }] = useMutation(GenerateAIMessage);
   const { data: conversationData, loading: loadingConversation } = useQuery(FindConversation, { variables: { id }, skip: !id })
+  const [createUpdateConversationMutation] = useMutation(CreateUpdateConversation);
 
   const conversation = conversationData?.conversation || {};
 
@@ -43,9 +45,33 @@ export default () => {
     <div>
       {loadingConversation && (<div>Loading...</div>)}
 
-      <h1>{conversation.title}</h1>
+      <h1>
+        <EditableText
+          value={conversation.title}
+          onSave={(title) => createUpdateConversationMutation({
+            variables: {
+              data: {
+                ...conversation,
+                __typename: undefined,
+                title,
+              }
+            }
+          })}
+        />
+      </h1>
       <p>
-        {conversation.description}
+        <EditableText
+          value={conversation.description}
+          onSave={(description) => createUpdateConversationMutation({
+            variables: {
+              data: {
+                ...conversation,
+                __typename: undefined,
+                description,
+              }
+            }
+          })}
+        />
       </p>
 
       <div className={styles.Messages}>

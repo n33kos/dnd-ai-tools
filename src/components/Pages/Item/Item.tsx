@@ -1,6 +1,7 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { FindItem } from '../../../graph/item';
+import { CreateUpdateItem, FindItem } from '../../../graph/item';
+import EditableText from '../../shared/EditableText/EditableText';
 import OptionList from '../../shared/OptionList/OptionList';
 
 export default () => {
@@ -8,6 +9,7 @@ export default () => {
   const { id } = router.query
   const { data, loading } = useQuery(FindItem, { variables: { id }, skip: !id })
   const item = data?.item || {};
+  const [createUpdateItemMutation] = useMutation(CreateUpdateItem);
 
   const options = [
     {
@@ -20,9 +22,33 @@ export default () => {
     <div>
       {loading && (<div>Loading...</div>)}
 
-      <h1>{item.name}</h1>
+      <h1>
+        <EditableText
+          value={item.name}
+          onSave={(name) => createUpdateItemMutation({
+            variables: {
+              data: {
+                ...item,
+                __typename: undefined,
+                name,
+              }
+            }
+          })}
+        />
+      </h1>
       <p>
-        {item.description}
+        <EditableText
+          value={item.description}
+          onSave={(description) => createUpdateItemMutation({
+            variables: {
+              data: {
+                ...item,
+                __typename: undefined,
+                description,
+              }
+            }
+          })}
+        />
       </p>
 
       <OptionList options={options} />
